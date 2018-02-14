@@ -1,0 +1,46 @@
+{
+    "data" : {
+        "source": "data/NatalityUSA2015Dec.csv",
+        "format": "csv",
+        "schema": {
+            "BirthMonth"   : "int",
+            "BabyGender"   : "string",
+            "BabyWeight"   : "float",
+            "MotherAge"    : "int",
+            "MotherRace"   : "string",
+            "MotherStatus" : "string",
+            "MotherEdu"    : "string",
+            "MotherHeight" : "float",
+            "MotherWeight" : "float",
+            "MotherWgtGain": "float",
+            "FatherAge"    : "int",
+            "FatherRace"   : "string",
+            "FatherEdu"    : "string"
+        }
+    },
+    "operations": [
+        {
+            "$select": {
+                "MotherAge": [12, 45],
+                "FatherAge": [12, 45]
+            }
+        },
+        {
+            "$aggregate" : {
+                "$group": ["FatherAge", "MotherAge"],
+                "$reduce" : {
+                    "Babies": { "$count": "*"},
+                    "Avg. Weight": { "$avg": "Weight"}
+                }
+            }
+        },
+        {
+            "$visualize": {
+                "mark": "rect",
+                "x": "MotherAge",
+                "y": "FatherAge",
+                "color": "Babies"
+            }
+        }
+    ]
+}

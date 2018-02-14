@@ -1,0 +1,28 @@
+{
+    "male": {
+        "by_education": {
+            "8th Grade": 1930000,
+            "9-12th Grade": 1848000,
+            "High School Grad.": 35788000,
+            "Some College": 22140000,
+            "Associate": 10206000,
+            "Bachelor": 22485000,
+            "Master": 8916000,
+            "Doctorate": 4194000,
+            "Unknown": 2978000
+        }
+    },
+    "female" : {
+        "by_education": {
+            "8th Grade": 1963000,
+            "9-12th Grade": 1811000,
+            "High School Grad.": 3509400,
+            "Some College": 24611000,
+            "Associate": 13194000,
+            "Bachelor": 25234000,
+            "Master": 11271000,
+            "Doctorate": 3021000,
+            "Unknown": 3009000
+        }
+    }
+}

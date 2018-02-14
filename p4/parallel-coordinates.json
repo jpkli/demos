@@ -1,0 +1,45 @@
+{
+    "data" : {
+        "source": "data/NatalityUSA2015Dec.csv",
+        "format": "csv",
+        "schema": {
+            "BirthMonth"   : "int",
+            "BabyGender"   : "string",
+            "BabyWeight"   : "float",
+            "MotherAge"    : "int",
+            "MotherRace"   : "string",
+            "MotherStatus" : "string",
+            "MotherEdu"    : "string",
+            "MotherHeight" : "float",
+            "MotherWeight" : "float",
+            "MotherWgtGain": "float"
+        }
+    },
+    "views": [
+        {
+            "id": "chart",
+            "width": 600,
+            "height": 360,
+            "padding": {"left": 50, "right": 10, "top" : 50, "bottom": 10}
+        }
+    ],
+    "operations": [
+        {
+            "$visualize": {
+                "mark": "line",
+                "color": "darkblue",
+                "opacity": "auto",
+                "y": [
+                    "BabyWeight",
+                    "MotherWeight",
+                    "MotherWgtGain",
+                    "MotherHeight"
+                ], "brush": {
+                    "unselected": {
+                        "opacity": 0
+                    }
+                }
+            }
+        }
+    ]
+}

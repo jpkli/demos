@@ -1,0 +1,41 @@
+{
+    "data" : {
+        "source": "data/NatalityUSA2015Dec.csv",
+        "format": "csv",
+        "schema": {
+            "BirthMonth"   : "int",
+            "BabyGender"   : "string",
+            "BabyWeight"   : "float",
+            "MotherAge"    : "int",
+            "MotherRace"   : "string",
+            "MotherStatus" : "string",
+            "MotherEdu"    : "string",
+            "MotherHeight" : "float",
+            "MotherWeight" : "float",
+            "MotherWgtGain": "float"
+        }
+    },
+    "operations": [
+        {
+            "$match": {
+                "BabyWeight": [0, 15],
+                "MotherWeight": [70, 370]
+            }
+        },
+        {
+            "$visualize": {
+                "mark": "circle",
+                "size": 8,
+                "color": "teal",
+                "opacity": "auto",
+                "x": "MotherWeight",
+                "y": "BabyWeight",
+                "brush": {
+                    "unselected": {
+                        "color": "gray"
+                    }
+                }
+            }
+        }
+    ]
+}
