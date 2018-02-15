@@ -28,8 +28,7 @@
             "$aggregate" : {
                 "$group": "AgeDiff",
                 "$reduce" : {
-                    "Babies": { "$count": "*"},
-                    "AvgWeight": { "$avg": "BabyWeight"}
+                    "Babies": { "$count": "*"}
                 }
             }
         },
