@@ -1,7 +1,9 @@
-var program;
+var program, rows, header, schema, views;
 var pageHeight = $('.column').height() - $('#page-header').height() * 2;
 $('.column').css('height', pageHeight);
 $('#editor').css('height', pageHeight);
+
+
 
 ace.config.set("packaged", true);
 var editor = ace.edit("editor");
@@ -13,21 +15,14 @@ editor.setOptions({
 });
 editor.$blockScrolling = Infinity;
 
-p6.ajax.get({
-    url: 'data/Nat2015result-200k.csv',
-    dataType: 'text'
-}).then(function(text){
-    var rows = p6.parse(text, ','),
-        header = rows.shift();
+function loadData() {
+    $('#main-vis').html('');
 
-    var schema = header.reduce(function(obj,value){
-        var vals = value.split(':');
-        obj[vals[0]] =vals[1];
-        return obj;
-    }, {});
+    var dataSize = parseInt($('#data-size').val());
+    var size = (dataSize <= rows.length) ? dataSize : rows.length;
 
     var db = p6.cstore({
-        size: rows.length,
+        size: size,
         struct: schema
     });
     db.addRows(rows);
@@ -46,15 +41,47 @@ p6.ajax.get({
         viewport: [800, 450],
         data: data
     };
-    var selectedExample = window.location.href.split("#")[1] || null;
     program = p6(dsl);
-    $.getJSON('examples/examples.json', function(examples){
+}
+
+function execute() {
+    var spec = JSON.parse(editor.getValue());
+    if(spec.hasOwnProperty('views')) program.view(spec.views);
+    else program.view(views);
+    program.runSpec(spec.operations || spec.pipeline);
+}
+
+
+$('#data-size').on('change', function(){
+    loadData();
+    execute();
+})
+
+p6.ajax.get({
+    url: '/data/NatUSA/Nat2015result-200k.csv',
+    dataType: 'text'
+}).then(function(text){
+    rows = p6.parse(text, ',');
+    header = rows.shift();
+
+    schema = header.reduce(function(obj,value){
+        var vals = value.split(':');
+        obj[vals[0]] =vals[1];
+        return obj;
+    }, {});
+
+    var selectedExample = window.location.href.split("#")[1] || null;
+
+    loadData();
+
+    $.getJSON('/p4/examples.json', function(examples){
         examples.forEach(function(ex, ei){
             var div = $('<div/>').addClass('sidebar-module'),
-                h4 = $('<h5/>').text(ex.category),
+                // h4 = $('<h5/>').text(ex.category),
                 ul = $('<ul/>').addClass('list-unstyled example-list');
 
                 if(ex.hasOwnProperty('views')) {
+                    views = ex.views;
                     program.view(ex.views);
                 }
             ex.examples.forEach(function(item, ii){
@@ -66,7 +93,7 @@ p6.ajax.get({
                     $('.example-list .active').removeClass('active');
                     $(this).addClass('active');
                     $.ajax({
-                        url: 'examples/' + item.file,
+                        url: '/p4/' + item.file,
                         dataType: 'text',
                     })
                     .done(function(json){
@@ -91,7 +118,7 @@ p6.ajax.get({
                 }
             })
 
-            div.append(h4);
+            // div.append(h4);
             div.append(ul);
             $('#list-examples').append(div);
         })
@@ -100,7 +127,5 @@ p6.ajax.get({
 })
 
 $('#run-spec').click(function(){
-    var spec = JSON.parse(editor.getValue());
-    if(spec.hasOwnProperty('views')) program.view(spec.views);
-    program.runSpec(spec.operations || spec.pipeline);
+    execute();
 })

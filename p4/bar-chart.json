@@ -1,6 +1,6 @@
 {
     "data" : {
-        "source": "data/NatalityUSA2015Dec.csv",
+        "source": "data/NatalityUSA2015.csv",
         "format": "csv",
         "schema": {
             "BirthMonth"   : "int",
@@ -18,7 +18,7 @@
     "operations": [
         {
             "$aggregate" : {
-                "$group": "MotherRace",
+                "$group": "MotherEdu",
                 "$reduce" : {
                     "Babies": { "$count": "*"},
                     "AvgWeight": { "$avg": "BabyWeight"}
@@ -29,8 +29,11 @@
             "$visualize": {
                 "mark": "bar",
                 "color": "steelblue",
-                "y": "MotherRace",
-                "width": "Babies"
+                "x": "MotherEdu",
+                "height": "Babies",
+                "hover": {
+                    "selected": {"color": "orange"}
+                }
             }
         }
     ]
