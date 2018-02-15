@@ -20,8 +20,7 @@
             "$aggregate" : {
                 "$group": "MotherEdu",
                 "$reduce" : {
-                    "Babies": { "$count": "*"},
-                    "AvgWeight": { "$avg": "BabyWeight"}
+                    "Babies": { "$count": "*"}
                 }
             }
         },
