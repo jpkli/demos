@@ -58,7 +58,7 @@ $('#data-size').on('change', function(){
 })
 
 p6.ajax.get({
-    url: '/data/NatUSA/Nat2015result-200k.csv',
+    url: '../data/NatUSA/Nat2015result-200k.csv',
     dataType: 'text'
 }).then(function(text){
     rows = p6.parse(text, ',');
@@ -74,7 +74,7 @@ p6.ajax.get({
 
     loadData();
 
-    $.getJSON('/p4/examples.json', function(examples){
+    $.getJSON('../p4/examples.json', function(examples){
         examples.forEach(function(ex, ei){
             var div = $('<div/>').addClass('sidebar-module'),
                 // h4 = $('<h5/>').text(ex.category),
@@ -93,7 +93,7 @@ p6.ajax.get({
                     $('.example-list .active').removeClass('active');
                     $(this).addClass('active');
                     $.ajax({
-                        url: '/p4/' + item.file,
+                        url: '../p4/' + item.file,
                         dataType: 'text',
                     })
                     .done(function(json){
