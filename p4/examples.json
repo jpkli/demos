@@ -37,6 +37,10 @@
             {
                 "name": "Line Perception",
                 "file": "perception-line.json"
+            },
+            {
+                "name": "Multiple Views",
+                "file": "multiviews.json"
             }
         ],
         "views": [
