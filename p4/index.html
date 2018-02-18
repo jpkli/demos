@@ -27,9 +27,9 @@
             </div>
             <div class="navbar-collapse collapse">
               <ul class="nav navbar-nav navbar-right" >
-                <li ><a href="../"><span class="glyphicon glyphicon-home"></span> Home</a></li>
-                <li><a href="../#document"><span class="glyphicon glyphicon-info-sign"></span> Doc</a></li>
-                <li><a href="https://github.com/jpkli/p4.gl">Github</a></li>
+                <li ><a href="https://jpkli.github.io/p4"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+                <li><a href="#" id="show-info"><span class="glyphicon glyphicon-info-sign"></span> Info </a></li>
+                <li><a href="https://github.com/jpkli/p4">Github</a></li>
               </ul>
             </div>
         </div>
@@ -61,14 +61,48 @@
         </div>
     </div>
 
+    <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="gridSystemModalLabel">P4 Demo App</h4>
+          </div>
+          <div class="modal-body">
+              <h4>About</h4>
+              <p>
+                  This application is for demonstrating the functionalities and features in P4. It contains examples to show the usage of P4's declarative grammar and syntax for specifying different data transformations, visualizations, and interactions.
+              </p>
+              <br />
+              <h4>System Requirements</h4>
+              <p>It is best to run this application using the latest version of <a href="https://www.google.com/chrome/">Google Chrome</a> on a system with a modern GPU. Please note that P4 is still in beta. Both Chrome and Firefox with AMD, Intel, and Nvidia GPUs have been tested on Linux, Mac OS, and Windows. It is known that Mac OS with some AMD GPUs can cause error. </p>
+              <br />
+              <h4>Dataset</h4>
+              <p>
+                  The dataset used in this demo application contains data records of babies born in 2015 and their parents, which is part of
+                  the publicly-available datasets from <a herf="https://www.cdc.gov/nchs/index.htm">U.S. National Center
+                  for Health Statistics</a> released to public.
+              </p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" id="continue">Continue</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
     <script src="../lib/p4.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js"></script>
     <script src="../apps/p4-player.js"></script>
     <script>
-        $('#reload-page').click(function() {
-            window.location.reload();
+        $('#myModal').modal('show');
+        $('#show-info').click(function(){
+            $('#myModal').modal('show');
+        });
+        $('#continue').click(function(){
+            $('#myModal').modal('hide');
         });
     </script>
 </body>

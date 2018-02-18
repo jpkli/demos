@@ -1,9 +1,7 @@
-var program, rows, header, schema, views;
+var spec, specString, program, rows, header, schema, views;
 var pageHeight = $('.column').height() - $('#page-header').height() * 2;
 $('.column').css('height', pageHeight);
 $('#editor').css('height', pageHeight);
-
-
 
 ace.config.set("packaged", true);
 var editor = ace.edit("editor");
@@ -45,17 +43,23 @@ function loadData() {
 }
 
 function execute() {
-    var spec = JSON.parse(editor.getValue());
+    spec = JSON.parse(editor.getValue());
     if(spec.hasOwnProperty('views')) program.view(spec.views);
     else program.view(views);
     program.runSpec(spec.operations || spec.pipeline);
 }
 
-
 $('#data-size').on('change', function(){
     loadData();
     execute();
 })
+
+$('#reload-page').click(function() {
+    editor.setValue("");
+    editor.session.insert({row:0, column: 0}, specString);
+    editor.getSession().foldAll(2, 17);
+    execute();
+});
 
 p6.ajax.get({
     url: '../data/NatUSA/Nat2015result-200k.csv',
@@ -97,7 +101,8 @@ p6.ajax.get({
                         dataType: 'text',
                     })
                     .done(function(json){
-                        var spec = JSON.parse(json);
+                        specString = json;
+                        spec = JSON.parse(json);
                         if(spec.hasOwnProperty('views')) {
                             program.view(spec.views);
                         } else if(ex.hasOwnProperty('views')) {
