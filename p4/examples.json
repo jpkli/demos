@@ -16,7 +16,7 @@
             },
             {
                 "name": "Heatmap",
-                "file": "heatmap.json"
+                "file": "heatmap2D.json"
             },
             {
                 "name": "Derive New Variable",
