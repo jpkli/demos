@@ -20,7 +20,7 @@
     },
     "operations": [
         {
-            "$select": {
+            "$match": {
                 "MotherAge": [12, 45],
                 "FatherAge": [12, 45]
             }
